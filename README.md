@@ -32,9 +32,15 @@ Windows 仅提供便携版。
 
 ## GitHub Pages
 
-推送到 `main` 后，GitHub Actions 会自动构建并部署。
+推送到 `main` 后，GitHub Actions 会构建并发布到 `gh-pages` 分支。
 
-若首次部署失败，到仓库 Settings → Pages → Source 选择 **GitHub Actions**。
+首次部署后，到仓库 Settings → Pages：
+
+1. Source 选 **Deploy from a branch**
+2. Branch 选 **gh-pages** / **/ (root)**
+3. Save
+
+站点：https://yqxx.github.io/chirrup-web/
 
 ## 设计说明
 
