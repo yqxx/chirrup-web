@@ -4,7 +4,7 @@
       <div class="download-head">
         <span class="section-label">下载</span>
         <h2 class="section-title">获取风紧扯呼</h2>
-        <p class="section-desc">当前版本 {{ APP_VERSION }}。安装包由本站直接提供，无需账号。</p>
+        <p class="section-desc">当前版本 {{ APP_VERSION }}。安装包托管于 Gitee，国内可直接下载。</p>
       </div>
 
       <div class="download-grid">
@@ -19,8 +19,9 @@
           <div class="card-actions">
             <a
               class="btn btn-primary"
-              :href="downloadUrl(downloads.windows.file)"
-              :download="downloads.windows.file"
+              :href="downloads.windows.url"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Download :size="16" />
               {{ downloads.windows.label }}
@@ -39,8 +40,9 @@
           <div class="card-actions">
             <a
               class="btn btn-primary"
-              :href="downloadUrl(downloads.macos.file)"
-              :download="downloads.macos.file"
+              :href="downloads.macos.url"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Download :size="16" />
               {{ downloads.macos.label }}
@@ -63,7 +65,7 @@
 
 <script setup lang="ts">
 import { Apple, Download, Info, Monitor } from '@lucide/vue'
-import { APP_VERSION, downloadUrl, downloads } from '@/config/downloads'
+import { APP_VERSION, downloads } from '@/config/downloads'
 </script>
 
 <style scoped lang="scss">

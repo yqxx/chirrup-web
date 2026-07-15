@@ -1,12 +1,11 @@
-# 安装包目录
+# 安装包说明
 
-将私有仓库 `chirrup` 打包产物复制到此目录，并按下列文件名命名（与 `src/config/downloads.ts` 一致）：
+安装包已改由 Gitee Releases 托管，不再放在本目录。
 
-| 文件 | 来源 |
-|------|------|
-| `chirrup-1.0.0-windows-portable.exe` | `npm run build:win:portable` |
-| `chirrup-1.0.0-macos.dmg` | `npm run build:mac` |
+仓库：https://gitee.com/yqxx/chirrup-releases
 
-Windows 仅提供便携版（portable.exe），不提供 NSIS 安装包。
+发新版步骤：
 
-发新版时：更新 `src/config/downloads.ts` 中的 `APP_VERSION` 与文件名，替换本目录文件后推送即可。
+1. 在 Gitee 创建发行版（Tag 如 `v1.0.1`），上传 exe / dmg
+2. 更新 `src/config/downloads.ts` 中的 `APP_VERSION`（链接会随之变化）
+3. 推送本仓库，官网自动部署

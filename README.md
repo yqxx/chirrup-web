@@ -6,7 +6,8 @@ Vue 3 下载落地页，主题色与桌面端应用一致（黑 / 金 `#D4AF37`�
 - 站点：https://chirrup.cn/
 - 备用：https://yqxx.github.io/chirrup-web/（改用自定义域名后路径可能不可用）
 
-桌面端应用仓库为**私有**，本站不链接源码；安装包由本站 `public/downloads/` 直接托管。
+桌面端应用仓库为**私有**，本站不链接源码；安装包托管在
+[Gitee Releases](https://gitee.com/yqxx/chirrup-releases/releases)。
 
 ## 本地开发
 
@@ -20,16 +21,16 @@ npm run dev
 ## 发布安装包
 
 1. 在私有仓库 `chirrup` 中打包
-2. 将产物复制到 `public/downloads/`，文件名与 `src/config/downloads.ts` 一致：
+2. 到 [chirrup-releases](https://gitee.com/yqxx/chirrup-releases) 创建发行版，上传：
 
 | 文件 | 命令 |
 |------|------|
-| `chirrup-1.0.0-windows-portable.exe` | `npm run build:win:portable` |
-| `chirrup-1.0.0-macos.dmg` | `npm run build:mac` |
+| `chirrup-x.y.z-windows-portable.exe` | `npm run build:win:portable` |
+| `chirrup-x.y.z-macos.dmg` | `npm run build:mac` |
+
+3. 更新 `src/config/downloads.ts` 的 `APP_VERSION`，推送本仓库
 
 Windows 仅提供便携版。
-
-3. 发新版时同步更新 `APP_VERSION` 与文件名，再推送本仓库
 
 ## 域名与 Cloudflare
 
