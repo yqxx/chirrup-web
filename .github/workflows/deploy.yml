@@ -39,5 +39,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
-          # Ensure .nojekyll for GitHub Pages
           enable_jekyll: false
+          cname: chirrup.cn
