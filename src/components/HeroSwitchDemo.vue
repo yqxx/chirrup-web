@@ -84,15 +84,29 @@ const caption = computed(() => captions[stage.value] ?? captions[0])
 let tl: gsap.core.Timeline | null = null
 
 function setStaticSafe() {
-  gsap.set(idleWin.value, { opacity: 0.25, scale: 0.92, x: -28, y: 18, zIndex: 1 })
+  const offset = mobileOffset()
+  gsap.set(idleWin.value, {
+    opacity: 0.25,
+    scale: 0.92,
+    x: -offset,
+    y: 14,
+    zIndex: 1,
+  })
   gsap.set(safeWin.value, { opacity: 1, scale: 1, x: 0, y: 0, zIndex: 3 })
   gsap.set(toastEl.value, { opacity: 0, y: 12 })
   gsap.set(miniEl.value, { opacity: 1, scale: 1 })
   stage.value = 2
 }
 
+function mobileOffset() {
+  return window.matchMedia('(max-width: 560px)').matches ? 12 : 32
+}
+
 function buildTimeline() {
   if (!idleWin.value || !safeWin.value || !toastEl.value || !miniEl.value) return
+
+  const offset = mobileOffset()
+  const safeStartX = window.matchMedia('(max-width: 560px)').matches ? 14 : 36
 
   tl?.kill()
   tl = gsap.timeline({
@@ -109,7 +123,13 @@ function buildTimeline() {
   })
 
   gsap.set(idleWin.value, { opacity: 1, scale: 1, x: 0, y: 0, zIndex: 3 })
-  gsap.set(safeWin.value, { opacity: 0.55, scale: 0.94, x: 36, y: 22, zIndex: 1 })
+  gsap.set(safeWin.value, {
+    opacity: 0.55,
+    scale: 0.94,
+    x: safeStartX,
+    y: 16,
+    zIndex: 1,
+  })
   gsap.set(toastEl.value, { opacity: 0, y: 16, scale: 0.96 })
   gsap.set(miniEl.value, { opacity: 0.7, scale: 1 })
 
@@ -121,7 +141,7 @@ function buildTimeline() {
     .to(miniEl.value, { scale: 1.06, duration: 0.2, yoyo: true, repeat: 1 }, t0 + 1.35)
     .to(
       idleWin.value,
-      { opacity: 0.2, scale: 0.9, x: -32, y: 20, zIndex: 1, duration: 0.55 },
+      { opacity: 0.2, scale: 0.9, x: -offset, y: 16, zIndex: 1, duration: 0.55 },
       t0 + 2.4,
     )
     .to(
@@ -360,7 +380,97 @@ onUnmounted(() => {
 
 @media (max-width: 900px) {
   .desktop {
-    height: 300px;
+    height: 320px;
+  }
+}
+
+@media (max-width: 560px) {
+  .caption {
+    font-size: 12px;
+  }
+
+  .desktop {
+    height: 360px;
+    padding: 12px;
+  }
+
+  .desktop-bar {
+    margin-bottom: 8px;
+    font-size: 11px;
+    gap: 8px;
+
+    em {
+      white-space: nowrap;
+    }
+  }
+
+  .window {
+    width: min(88%, 280px);
+  }
+
+  .window-idle {
+    left: 6%;
+    top: 48px;
+  }
+
+  .window-safe {
+    left: 10%;
+    top: 56px;
+  }
+
+  .win-chrome {
+    height: 28px;
+    padding: 0 8px;
+
+    em {
+      font-size: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 70%;
+    }
+  }
+
+  .win-body {
+    padding: 10px;
+
+    p {
+      margin-top: 6px;
+      font-size: 11px;
+    }
+  }
+
+  .fake-video {
+    height: 72px;
+  }
+
+  .cell {
+    height: 20px;
+  }
+
+  .alert-toast {
+    right: 10px;
+    left: auto;
+    bottom: 52px;
+    max-width: calc(100% - 20px);
+    padding: 8px 10px;
+    gap: 8px;
+
+    strong {
+      font-size: 12px;
+    }
+
+    em {
+      font-size: 11px;
+    }
+  }
+
+  .mini-bar {
+    left: 10px;
+    bottom: 10px;
+    height: 30px;
+    padding: 0 10px;
+    font-size: 11px;
   }
 }
 </style>

@@ -151,17 +151,29 @@ import HeroSwitchDemo from '@/components/HeroSwitchDemo.vue'
 
 @media (max-width: 900px) {
   .hero {
-    padding: 48px 0 72px;
+    padding: 40px 0 56px;
   }
 
   .hero-inner {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 28px;
   }
 
   .hero-visual {
-    max-width: 440px;
-    margin-inline: auto;
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    padding: 32px 0 48px;
+  }
+
+  .hero-desc {
+    margin-bottom: 22px;
+    font-size: 15px;
   }
 }
 </style>
