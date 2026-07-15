@@ -3,70 +3,13 @@
     <div class="container">
       <div class="section-head">
         <span class="section-label">下载与安装</span>
-        <h2 class="section-title">获取风紧扯呼</h2>
+        <h2 class="section-title">下载并完成首次运行</h2>
         <p class="section-desc">
-          当前版本 {{ APP_VERSION }}。先下载安装包，再按下方示意完成首次运行。
+          当前版本 {{ APP_VERSION }}。选择系统后下载，再按示意放行即可。
         </p>
       </div>
 
-      <div class="download-grid">
-        <article class="download-card">
-          <div class="card-top">
-            <Monitor :size="28" stroke-width="1.75" />
-            <div>
-              <h3>Windows</h3>
-              <p>{{ downloads.windows.hint }}</p>
-            </div>
-          </div>
-          <div class="card-actions">
-            <a
-              class="btn btn-primary"
-              :href="downloads.windows.url"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Download :size="16" />
-              {{ downloads.windows.label }}
-            </a>
-          </div>
-        </article>
-
-        <article class="download-card">
-          <div class="card-top">
-            <Apple :size="28" stroke-width="1.75" />
-            <div>
-              <h3>macOS</h3>
-              <p>{{ downloads.macos.hint }}</p>
-            </div>
-          </div>
-          <div class="card-actions">
-            <a
-              class="btn btn-primary"
-              :href="downloads.macos.url"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Download :size="16" />
-              {{ downloads.macos.label }}
-            </a>
-          </div>
-        </article>
-      </div>
-
-      <div class="download-note">
-        <Info :size="18" />
-        <p>
-          安装包暂未代码签名。Windows 可能出现 SmartScreen，点击「更多信息 → 仍要运行」；macOS
-          请按下方示意操作。
-        </p>
-      </div>
-
-      <div class="setup-block" id="setup">
-        <div class="setup-head">
-          <h3>首次运行</h3>
-          <p>未签名安装包可能被系统拦截，看一遍示意即可。</p>
-        </div>
-
+      <div class="platform-bar">
         <div class="platform-tabs" role="tablist" aria-label="操作系统">
           <button
             type="button"
@@ -88,6 +31,22 @@
           </button>
         </div>
 
+        <a
+          class="btn btn-primary platform-download"
+          :href="currentDownload.url"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Download :size="16" />
+          {{ currentDownload.label }}
+        </a>
+      </div>
+
+      <p class="unsigned-tip">
+        安装包暂未代码签名。Windows 点「更多信息 → 仍要运行」；macOS 按下方示意操作。
+      </p>
+
+      <div class="setup-block" id="setup">
         <div class="guide-demo">
           <div
             class="scene"
@@ -187,7 +146,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import gsap from 'gsap'
-import { Apple, Download, Info, Monitor } from '@lucide/vue'
+import { Download } from '@lucide/vue'
 import { APP_VERSION, downloads } from '@/config/downloads'
 import { publicUrl } from '@/config/site'
 import { useInView } from '@/composables/useInView'
@@ -199,6 +158,8 @@ const iconUrl = publicUrl('icon.svg')
 const platform = ref<Platform>('windows')
 const step = ref(0)
 const paused = ref(false)
+
+const currentDownload = computed(() => downloads[platform.value])
 
 const rootEl = ref<HTMLElement | null>(null)
 const dialogEl = ref<HTMLElement | null>(null)
@@ -386,110 +347,35 @@ onUnmounted(() => {
 }
 
 .section-head {
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
-.download-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.download-card {
-  padding: 24px;
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-bg);
-  transition:
-    border-color var(--transition),
-    box-shadow var(--transition);
-
-  &:hover {
-    border-color: var(--color-cta);
-    box-shadow: var(--shadow-md);
-  }
-}
-
-.card-top {
+.platform-bar {
   display: flex;
-  gap: 14px;
-  margin-bottom: 20px;
-  color: var(--color-text);
-
-  h3 {
-    margin: 0 0 4px;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-  p {
-    margin: 0;
-    font-size: 14px;
-    color: var(--color-text-muted);
-  }
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  margin-bottom: 12px;
 }
 
-.card-actions {
-  .btn {
-    height: 42px;
-    padding: 0 16px;
-    font-size: 14px;
-    box-shadow: none;
-  }
-}
-
-.download-note {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 14px 16px;
-  margin-bottom: 48px;
-  border-radius: var(--radius-md);
-  background: var(--color-accent-muted);
-  border: 1px solid rgba(212, 175, 55, 0.28);
-  color: var(--color-text-muted);
+.platform-download {
+  height: 42px;
+  padding: 0 18px;
   font-size: 14px;
-
-  p {
-    margin: 0;
-    line-height: 1.6;
-  }
-
-  :deep(svg) {
-    flex-shrink: 0;
-    margin-top: 2px;
-    color: var(--color-cta);
-  }
+  box-shadow: none;
 }
 
-.setup-block {
-  padding-top: 8px;
-}
-
-.setup-head {
-  margin-bottom: 20px;
-
-  h3 {
-    margin: 0 0 6px;
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-  }
-
-  p {
-    margin: 0;
-    font-size: 15px;
-    color: var(--color-text-muted);
-  }
+.unsigned-tip {
+  margin: 0 0 32px;
+  font-size: 13px;
+  color: var(--color-text-subtle);
+  line-height: 1.55;
 }
 
 .platform-tabs {
   display: inline-flex;
   gap: 4px;
   padding: 4px;
-  margin-bottom: 24px;
   border-radius: var(--radius-sm);
   background: var(--color-bg);
   border: 1.5px solid var(--color-border);
@@ -787,9 +673,14 @@ onUnmounted(() => {
   }
 }
 
-@media (max-width: 640px) {
-  .download-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 560px) {
+  .platform-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .platform-download {
+    width: 100%;
   }
 }
 </style>

@@ -10,14 +10,14 @@
         <p class="brand-mark reveal">风紧扯呼</p>
         <h1 class="hero-title reveal reveal-delay-1">局域网实时预警<br />一键切屏保平安</h1>
         <p class="hero-desc reveal reveal-delay-2">
-          同事一喊「风紧扯呼」，全员自动切到安全应用。安装包仅约 5–15MB，轻量好用。
+          同事一喊「风紧扯呼」，全员自动切到安全应用。轻量本地，即下即用。
         </p>
         <div class="hero-actions reveal reveal-delay-3">
           <a class="btn btn-primary" href="#download">
             <Download :size="18" />
             免费下载
           </a>
-          <a class="btn btn-secondary" href="#setup">使用指南</a>
+          <a class="btn btn-secondary" href="#download">使用指南</a>
         </div>
         <ul class="hero-meta reveal reveal-delay-3">
           <li>Windows / macOS</li>
