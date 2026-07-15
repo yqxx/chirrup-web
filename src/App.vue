@@ -5,8 +5,7 @@
       <HeroSection />
       <FeaturesSection />
       <HowSection />
-      <DownloadSection />
-      <GuideSection />
+      <GetStartedSection />
     </main>
     <SiteFooter />
   </div>
@@ -17,8 +16,7 @@ import SiteHeader from '@/components/SiteHeader.vue'
 import HeroSection from '@/components/HeroSection.vue'
 import FeaturesSection from '@/components/FeaturesSection.vue'
 import HowSection from '@/components/HowSection.vue'
-import DownloadSection from '@/components/DownloadSection.vue'
-import GuideSection from '@/components/GuideSection.vue'
+import GetStartedSection from '@/components/GetStartedSection.vue'
 import SiteFooter from '@/components/SiteFooter.vue'
 </script>
 

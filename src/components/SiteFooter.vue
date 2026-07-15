@@ -11,8 +11,8 @@
 
       <div class="footer-links">
         <a href="#features">功能</a>
+        <a href="#how">使用</a>
         <a href="#download">下载</a>
-        <a href="#guide">使用指南</a>
       </div>
 
       <p class="footer-copy">© {{ year }} 风紧扯呼 · Chirrup</p>

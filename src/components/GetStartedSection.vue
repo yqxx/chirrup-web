@@ -1,115 +1,174 @@
 <template>
-  <section class="section guide" id="guide" ref="rootEl">
+  <section class="section get-started" id="download" ref="rootEl">
     <div class="container">
-      <div class="guide-head">
-        <span class="section-label">指南</span>
-        <h2 class="section-title">首次运行与使用</h2>
-        <p class="section-desc">未签名安装包可能被系统拦截。看一遍示意，再按步骤放行即可。</p>
+      <div class="section-head">
+        <span class="section-label">下载与安装</span>
+        <h2 class="section-title">获取风紧扯呼</h2>
+        <p class="section-desc">
+          当前版本 {{ APP_VERSION }}。先下载安装包，再按下方示意完成首次运行。
+        </p>
       </div>
 
-      <div class="platform-tabs" role="tablist" aria-label="操作系统">
-        <button
-          type="button"
-          role="tab"
-          :aria-selected="platform === 'windows'"
-          :class="{ active: platform === 'windows' }"
-          @click="setPlatform('windows')"
-        >
-          Windows
-        </button>
-        <button
-          type="button"
-          role="tab"
-          :aria-selected="platform === 'macos'"
-          :class="{ active: platform === 'macos' }"
-          @click="setPlatform('macos')"
-        >
-          macOS
-        </button>
+      <div class="download-grid">
+        <article class="download-card">
+          <div class="card-top">
+            <Monitor :size="28" stroke-width="1.75" />
+            <div>
+              <h3>Windows</h3>
+              <p>{{ downloads.windows.hint }}</p>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a
+              class="btn btn-primary"
+              :href="downloads.windows.url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Download :size="16" />
+              {{ downloads.windows.label }}
+            </a>
+          </div>
+        </article>
+
+        <article class="download-card">
+          <div class="card-top">
+            <Apple :size="28" stroke-width="1.75" />
+            <div>
+              <h3>macOS</h3>
+              <p>{{ downloads.macos.hint }}</p>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a
+              class="btn btn-primary"
+              :href="downloads.macos.url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Download :size="16" />
+              {{ downloads.macos.label }}
+            </a>
+          </div>
+        </article>
       </div>
 
-      <div class="guide-demo">
-        <div
-          class="scene"
-          :class="{ paused: paused || reducedMotion }"
-          @mouseenter="paused = true"
-          @mouseleave="paused = false"
-          aria-hidden="true"
-        >
-          <!-- Windows scenes -->
-          <template v-if="platform === 'windows'">
-            <div class="dialog" ref="dialogEl">
-              <div class="dialog-icon warn">!</div>
-              <div class="dialog-body">
-                <h3>Windows 已保护你的电脑</h3>
-                <p class="detail">Microsoft Defender SmartScreen 阻止了未识别的应用。</p>
-                <div class="dialog-actions">
-                  <button type="button" class="ghost" tabindex="-1" ref="moreBtn">更多信息</button>
-                  <button type="button" class="primary" tabindex="-1" ref="runBtn">仍要运行</button>
-                </div>
-              </div>
-            </div>
-            <div class="app-mock" ref="appEl">
-              <div class="app-chrome">
-                <img :src="iconUrl" alt="" width="18" height="18" />
-                <span>风紧扯呼</span>
-              </div>
-              <div class="app-fields">
-                <label>我的昵称</label>
-                <div class="field" ref="fieldEl">PPT战神</div>
-                <label>目标应用</label>
-                <div class="field">季度汇报.xlsx</div>
-              </div>
-            </div>
-          </template>
+      <div class="download-note">
+        <Info :size="18" />
+        <p>
+          安装包暂未代码签名。Windows 可能出现 SmartScreen，点击「更多信息 → 仍要运行」；macOS
+          请按下方示意操作。
+        </p>
+      </div>
 
-          <!-- macOS scenes -->
-          <template v-else>
-            <div class="dialog mac" ref="dialogEl">
-              <div class="dialog-icon mac-icon">
-                <img :src="iconUrl" alt="" width="28" height="28" />
-              </div>
-              <div class="dialog-body">
-                <h3>无法打开“风紧扯呼”</h3>
-                <p class="detail">
-                  Apple 无法检查其是否包含恶意软件。可在隐私与安全性中仍要打开。
-                </p>
-                <div class="dialog-actions">
-                  <button type="button" class="ghost" tabindex="-1" ref="moreBtn">好</button>
-                  <button type="button" class="primary" tabindex="-1" ref="runBtn">仍要打开</button>
-                </div>
-              </div>
-            </div>
-            <div class="app-mock" ref="appEl">
-              <div class="app-chrome">
-                <img :src="iconUrl" alt="" width="18" height="18" />
-                <span>风紧扯呼</span>
-              </div>
-              <div class="app-fields">
-                <label>我的昵称</label>
-                <div class="field" ref="fieldEl">摸鱼达人</div>
-                <label>目标应用</label>
-                <div class="field">Notes</div>
-              </div>
-            </div>
-          </template>
+      <div class="setup-block" id="setup">
+        <div class="setup-head">
+          <h3>首次运行</h3>
+          <p>未签名安装包可能被系统拦截，看一遍示意即可。</p>
         </div>
 
-        <ol class="steps" aria-label="操作步骤">
-          <li
-            v-for="(item, index) in currentSteps"
-            :key="`${platform}-${item.title}`"
-            :class="{ active: step === index }"
+        <div class="platform-tabs" role="tablist" aria-label="操作系统">
+          <button
+            type="button"
+            role="tab"
+            :aria-selected="platform === 'windows'"
+            :class="{ active: platform === 'windows' }"
+            @click="setPlatform('windows')"
           >
-            <button type="button" class="step-btn" @click="jumpTo(index)">
-              <span class="num">{{ String(index + 1).padStart(2, '0') }}</span>
-              <span class="text">
-                <strong>{{ item.title }}</strong>
-                <em>{{ item.desc }}</em>
-              </span>
-            </button>
-          </li>
-        </ol>
+            Windows
+          </button>
+          <button
+            type="button"
+            role="tab"
+            :aria-selected="platform === 'macos'"
+            :class="{ active: platform === 'macos' }"
+            @click="setPlatform('macos')"
+          >
+            macOS
+          </button>
+        </div>
+
+        <div class="guide-demo">
+          <div
+            class="scene"
+            :class="{ paused: paused || reducedMotion }"
+            @mouseenter="paused = true"
+            @mouseleave="paused = false"
+            aria-hidden="true"
+          >
+            <template v-if="platform === 'windows'">
+              <div class="dialog" ref="dialogEl">
+                <div class="dialog-icon warn">!</div>
+                <div class="dialog-body">
+                  <h3>Windows 已保护你的电脑</h3>
+                  <p class="detail">Microsoft Defender SmartScreen 阻止了未识别的应用。</p>
+                  <div class="dialog-actions">
+                    <button type="button" class="ghost" tabindex="-1" ref="moreBtn">更多信息</button>
+                    <button type="button" class="primary" tabindex="-1" ref="runBtn">仍要运行</button>
+                  </div>
+                </div>
+              </div>
+              <div class="app-mock" ref="appEl">
+                <div class="app-chrome">
+                  <img :src="iconUrl" alt="" width="18" height="18" />
+                  <span>风紧扯呼</span>
+                </div>
+                <div class="app-fields">
+                  <label>我的昵称</label>
+                  <div class="field" ref="fieldEl">PPT战神</div>
+                  <label>目标应用</label>
+                  <div class="field">季度汇报.xlsx</div>
+                </div>
+              </div>
+            </template>
+
+            <template v-else>
+              <div class="dialog mac" ref="dialogEl">
+                <div class="dialog-icon mac-icon">
+                  <img :src="iconUrl" alt="" width="28" height="28" />
+                </div>
+                <div class="dialog-body">
+                  <h3>无法打开“风紧扯呼”</h3>
+                  <p class="detail">
+                    Apple 无法检查其是否包含恶意软件。可在隐私与安全性中仍要打开。
+                  </p>
+                  <div class="dialog-actions">
+                    <button type="button" class="ghost" tabindex="-1" ref="moreBtn">好</button>
+                    <button type="button" class="primary" tabindex="-1" ref="runBtn">仍要打开</button>
+                  </div>
+                </div>
+              </div>
+              <div class="app-mock" ref="appEl">
+                <div class="app-chrome">
+                  <img :src="iconUrl" alt="" width="18" height="18" />
+                  <span>风紧扯呼</span>
+                </div>
+                <div class="app-fields">
+                  <label>我的昵称</label>
+                  <div class="field" ref="fieldEl">摸鱼达人</div>
+                  <label>目标应用</label>
+                  <div class="field">Notes</div>
+                </div>
+              </div>
+            </template>
+          </div>
+
+          <ol class="steps" aria-label="操作步骤">
+            <li
+              v-for="(item, index) in currentSteps"
+              :key="`${platform}-${item.title}`"
+              :class="{ active: step === index }"
+            >
+              <button type="button" class="step-btn" @click="jumpTo(index)">
+                <span class="num">{{ String(index + 1).padStart(2, '0') }}</span>
+                <span class="text">
+                  <strong>{{ item.title }}</strong>
+                  <em>{{ item.desc }}</em>
+                </span>
+              </button>
+            </li>
+          </ol>
+        </div>
       </div>
 
       <div class="prep">
@@ -128,6 +187,8 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import gsap from 'gsap'
+import { Apple, Download, Info, Monitor } from '@lucide/vue'
+import { APP_VERSION, downloads } from '@/config/downloads'
 import { publicUrl } from '@/config/site'
 import { useInView } from '@/composables/useInView'
 import { usePrefersReducedMotion } from '@/composables/usePrefersReducedMotion'
@@ -146,7 +207,7 @@ const runBtn = ref<HTMLElement | null>(null)
 const appEl = ref<HTMLElement | null>(null)
 const fieldEl = ref<HTMLElement | null>(null)
 
-const inView = useInView(rootEl, 0.28)
+const inView = useInView(rootEl, 0.22)
 const reducedMotion = usePrefersReducedMotion()
 
 const stepsMap = {
@@ -319,20 +380,116 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
-.guide {
-  background: linear-gradient(180deg, var(--color-surface) 0%, #ffffff 100%);
+.get-started {
+  background: linear-gradient(180deg, #ffffff 0%, var(--color-surface) 45%, #ffffff 100%);
   border-top: 1px solid var(--color-border);
 }
 
-.guide-head {
-  margin-bottom: 28px;
+.section-head {
+  margin-bottom: 32px;
+}
+
+.download-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.download-card {
+  padding: 24px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+
+  &:hover {
+    border-color: var(--color-cta);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.card-top {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 20px;
+  color: var(--color-text);
+
+  h3 {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--color-text-muted);
+  }
+}
+
+.card-actions {
+  .btn {
+    height: 42px;
+    padding: 0 16px;
+    font-size: 14px;
+    box-shadow: none;
+  }
+}
+
+.download-note {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  margin-bottom: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-muted);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  color: var(--color-text-muted);
+  font-size: 14px;
+
+  p {
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  :deep(svg) {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--color-cta);
+  }
+}
+
+.setup-block {
+  padding-top: 8px;
+}
+
+.setup-head {
+  margin-bottom: 20px;
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--color-text-muted);
+  }
 }
 
 .platform-tabs {
   display: inline-flex;
   gap: 4px;
   padding: 4px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   border-radius: var(--radius-sm);
   background: var(--color-bg);
   border: 1.5px solid var(--color-border);
@@ -544,7 +701,7 @@ onUnmounted(() => {
   display: flex;
   gap: 14px;
   align-items: flex-start;
-  padding: 14px 14px;
+  padding: 14px;
   border: 1.5px solid transparent;
   border-radius: var(--radius-md);
   background: transparent;
@@ -627,6 +784,12 @@ onUnmounted(() => {
 
   .scene {
     min-height: 280px;
+  }
+}
+
+@media (max-width: 640px) {
+  .download-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

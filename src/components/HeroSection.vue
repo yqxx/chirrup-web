@@ -17,7 +17,7 @@
             <Download :size="18" />
             免费下载
           </a>
-          <a class="btn btn-secondary" href="#guide">使用指南</a>
+          <a class="btn btn-secondary" href="#setup">使用指南</a>
         </div>
         <ul class="hero-meta reveal reveal-delay-3">
           <li>Windows / macOS</li>
