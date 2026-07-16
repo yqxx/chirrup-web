@@ -43,7 +43,8 @@
       </div>
 
       <p class="unsigned-tip">
-        安装包暂未代码签名。Windows 下载前会演示如何在浏览器中保留文件；打开后的拦截见下方示意。
+        安装包暂未代码签名。Windows 下载前会演示浏览器保留步骤；macOS 请优先使用 DMG
+        内安装脚本，或按下方备选手动步骤。
       </p>
 
       <DownloadNoticeDialog
@@ -89,31 +90,51 @@
             </template>
 
             <template v-else>
-              <div class="dialog mac" ref="dialogEl">
-                <div class="dialog-icon mac-icon">
-                  <img :src="iconUrl" alt="" width="28" height="28" />
+              <div class="mac-scenes">
+                <div v-show="step === 0" class="mac-panel script-panel">
+                  <div class="dmg-row">
+                    <div class="dmg-icon app">
+                      <img :src="iconUrl" alt="" width="28" height="28" />
+                      <span>风紧扯呼</span>
+                    </div>
+                    <div class="dmg-icon script pulse-ring">
+                      <span class="script-badge">.command</span>
+                      <span>mac-install</span>
+                    </div>
+                    <div class="dmg-icon folder">应用程序</div>
+                  </div>
+                  <p class="mac-hint">推荐：双击 <em>mac-install.command</em> 自动安装</p>
                 </div>
-                <div class="dialog-body">
-                  <h3>无法打开“风紧扯呼”</h3>
-                  <p class="detail">
-                    Apple 无法检查其是否包含恶意软件。可在隐私与安全性中仍要打开。
-                  </p>
-                  <div class="dialog-actions">
-                    <button type="button" class="ghost" tabindex="-1" ref="moreBtn">好</button>
-                    <button type="button" class="primary" tabindex="-1" ref="runBtn">仍要打开</button>
+
+                <div v-show="step === 1" class="dialog mac damaged">
+                  <div class="dialog-icon warn">!</div>
+                  <div class="dialog-body">
+                    <h3>“风紧扯呼”已损坏，无法打开</h3>
+                    <p class="detail">你应该推出磁盘映像。此提示多为未签名安装包的隔离机制，并非文件真坏了。</p>
+                    <div class="dialog-actions">
+                      <button type="button" class="primary" tabindex="-1">取消</button>
+                      <button type="button" class="ghost" tabindex="-1">推出磁盘映像</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="app-mock" ref="appEl">
-                <div class="app-chrome">
-                  <img :src="iconUrl" alt="" width="18" height="18" />
-                  <span>风紧扯呼</span>
+
+                <div v-show="step === 2" class="mac-panel terminal-panel">
+                  <div class="term-chrome">终端 — bash</div>
+                  <pre class="term-body"><span class="prompt">$</span> xattr -dr com.apple.quarantine \
+  "/Applications/风紧扯呼.app"</pre>
                 </div>
-                <div class="app-fields">
-                  <label>我的昵称</label>
-                  <div class="field" ref="fieldEl">摸鱼达人</div>
-                  <label>目标应用</label>
-                  <div class="field">Notes</div>
+
+                <div v-show="step === 3" class="app-mock">
+                  <div class="app-chrome">
+                    <img :src="iconUrl" alt="" width="18" height="18" />
+                    <span>风紧扯呼</span>
+                  </div>
+                  <div class="app-fields">
+                    <label>我的昵称</label>
+                    <div class="field">摸鱼达人</div>
+                    <label>目标应用</label>
+                    <div class="field">Notes</div>
+                  </div>
                 </div>
               </div>
             </template>
@@ -209,20 +230,20 @@ const stepsMap = {
   ],
   macos: [
     {
-      title: '安装到应用程序',
-      desc: '打开 DMG，将应用拖入「应用程序」。',
+      title: '推荐：双击安装脚本',
+      desc: '打开 DMG，双击 mac-install.command；若被拦，到系统设置里「仍要打开」。',
     },
     {
-      title: '仍要打开',
-      desc: '若无法验证开发者：隐私与安全性 → 仍要打开。',
+      title: '若提示「已损坏」',
+      desc: '点「取消」，不要推出；把「风紧扯呼」拖到「应用程序」。',
     },
     {
-      title: '或解除隔离',
-      desc: '终端执行 xattr 命令后，从启动台打开。',
+      title: '终端解除隔离',
+      desc: '执行 xattr -dr com.apple.quarantine "/Applications/风紧扯呼.app"。',
     },
     {
-      title: '设置昵称与目标应用',
-      desc: '进入主界面后完成首次配置即可使用。',
+      title: '打开并完成设置',
+      desc: '从「应用程序」打开，设置昵称与目标应用。',
     },
   ],
 } as const
@@ -239,6 +260,15 @@ function setPlatform(next: Platform) {
 
 function jumpTo(index: number) {
   step.value = index
+  if (platform.value === 'macos') {
+    if (!tl || reducedMotion.value) return
+    const labels = ['s0', 's1', 's2', 's3'] as const
+    const label = labels[index]
+    if (!label) return
+    tl.seek(label)
+    if (!paused.value) tl.play()
+    return
+  }
   if (reducedMotion.value || !tl) {
     applyStatic(index)
     return
@@ -251,6 +281,8 @@ function jumpTo(index: number) {
 }
 
 function applyStatic(index: number) {
+  step.value = index
+  if (platform.value === 'macos') return
   if (!dialogEl.value || !appEl.value || !moreBtn.value || !runBtn.value) return
   gsap.set([moreBtn.value, runBtn.value], { boxShadow: 'none', scale: 1 })
   if (index < 3) {
@@ -265,7 +297,33 @@ function applyStatic(index: number) {
   }
 }
 
+function buildMacTimeline() {
+  tl?.kill()
+  tl = gsap.timeline({
+    repeat: -1,
+    onUpdate() {
+      const t = tl?.time() ?? 0
+      if (t < 1.8) step.value = 0
+      else if (t < 3.6) step.value = 1
+      else if (t < 5.4) step.value = 2
+      else step.value = 3
+    },
+  })
+  tl.addLabel('s0')
+    .to({}, { duration: 1.8 })
+    .addLabel('s1')
+    .to({}, { duration: 1.8 })
+    .addLabel('s2')
+    .to({}, { duration: 1.8 })
+    .addLabel('s3')
+    .to({}, { duration: 1.8 })
+}
+
 function buildTimeline() {
+  if (platform.value === 'macos') {
+    buildMacTimeline()
+    return
+  }
   if (!dialogEl.value || !appEl.value || !moreBtn.value || !runBtn.value) return
 
   tl?.kill()
@@ -468,6 +526,113 @@ onUnmounted(() => {
 
   &.paused {
     outline: 1.5px dashed rgba(212, 175, 55, 0.45);
+  }
+}
+
+.mac-scenes {
+  width: 100%;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mac-panel {
+  width: min(100%, 360px);
+  padding: 18px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+.dmg-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.dmg-icon {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-align: center;
+
+  &.script {
+    border-color: rgba(212, 175, 55, 0.55);
+    background: var(--color-accent-muted);
+    color: var(--color-text);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25);
+  }
+}
+
+.script-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--color-cta);
+  color: var(--color-cta-text);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.mac-hint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-align: center;
+
+  em {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+}
+
+.dialog.damaged {
+  .dialog-actions .primary {
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.55);
+  }
+}
+
+.terminal-panel {
+  background: #171717;
+  border-color: #262626;
+  color: #fafafa;
+}
+
+.term-chrome {
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #a3a3a3;
+}
+
+.term-body {
+  margin: 0;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: #0a0a0a;
+  font-size: 12px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: #e5e5e5;
+
+  .prompt {
+    color: var(--color-cta);
+    margin-right: 6px;
   }
 }
 
