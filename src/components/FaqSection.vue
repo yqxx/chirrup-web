@@ -3,11 +3,29 @@
     <div class="container">
       <div class="faq-head">
         <span class="section-label">常见问题</span>
-        <h2 class="section-title">连不上？先看这几条</h2>
-        <p class="section-desc">在线人数一直是 1、预警没反应，多半是局域网没打通。</p>
+        <h2 class="section-title">连不上？不放心？先看这几条</h2>
+        <p class="section-desc">安装拦截、在线 1 人、预警没反应——多数能在下面找到原因。</p>
       </div>
 
       <div class="faq-list">
+        <details class="faq-item">
+          <summary>为什么下载、安装要多几步？安全吗？</summary>
+          <div class="faq-a">
+            <p>
+              当前安装包<strong>未做代码签名 / Apple 公证</strong>（个人开发者证书与公证成本较高），Windows
+              SmartScreen、浏览器「保留」、macOS「无法验证 / 已损坏」都是系统对<strong>未签名软件</strong>的常规拦截，不是文件损坏，也不代表被病毒感染。
+            </p>
+            <p>
+              <strong>安全方面：</strong>预警只在局域网内用 UDP
+              广播，不经过我们的服务器；配置与历史留在本机，不收集账号、不上传聊天内容。安装包托管在官网指向的
+              Gitee Releases，请勿从不明镜像下载。
+            </p>
+            <p>
+              放行时请按页面「下载与安装」示意操作即可。后续若提供签名版本，可直接替换安装，无需改你的配置。
+            </p>
+          </div>
+        </details>
+
         <details class="faq-item">
           <summary>两边都显示「在线 1 人」，互相收不到预警？</summary>
           <div class="faq-a">
