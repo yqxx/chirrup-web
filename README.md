@@ -28,7 +28,9 @@ npm run dev
 | `chirrup-x.y.z-windows-portable.exe` | `npm run build:win:portable` |
 | `chirrup-x.y.z-macos.dmg` | `npm run build:mac` |
 
-3. 更新 `src/config/downloads.ts` 的 `APP_VERSION`，推送本仓库
+3. 更新 `src/config/downloads.ts` 的 `APP_VERSION`
+4. 同步 `workers/download-counter/wrangler.toml` 的 `APP_VERSION`，并重新 `npm run deploy`（见下）
+5. 推送本仓库
 
 Windows 仅提供便携版。
 
@@ -40,6 +42,18 @@ Windows 仅提供便携版。
 4. 证书签发完成前，DNS 可先用 **DNS only（灰云）**；稳定后再开橙云
 
 推送 `main` 后 Actions 会部署到 `gh-pages` 分支。
+
+### 下载量（Worker）
+
+官网按钮指向 `https://chirrup.cn/dl/windows|macos`，由 Worker 计数后跳转 Gitee。
+
+配置步骤见 [`workers/download-counter/README.md`](workers/download-counter/README.md)。
+
+查看：`https://chirrup.cn/dl/stats?token=你的STATS_TOKEN`
+
+### 访问量
+
+Cloudflare Dashboard → Analytics → Web Analytics → `chirrup.cn`（Automatic setup）。
 
 ## 设计说明
 

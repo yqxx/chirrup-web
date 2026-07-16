@@ -1,19 +1,17 @@
-/** 发版时同步更新版本号与下方链接 */
+/** 发版时同步更新：本文件 APP_VERSION + workers/download-counter/wrangler.toml */
 export const APP_VERSION = '1.0.4'
 
-const RELEASE_BASE = `https://gitee.com/yqxx/chirrup-releases/releases/download/v${APP_VERSION}`
-
 /**
- * 安装包托管在 Gitee Releases（国内下载更稳）。
- * 发新版：在 Gitee 发 Release 后，更新 APP_VERSION。
+ * 下载走本域 /dl/*（Cloudflare Worker 计数后跳转 Gitee）。
+ * Worker 未部署时链接会 404，需先按 workers/download-counter/README.md 配置。
  */
 export const downloads = {
   windows: {
     label: '下载 Windows 版',
-    url: `${RELEASE_BASE}/chirrup-${APP_VERSION}-windows-portable.exe`,
+    url: 'https://chirrup.cn/dl/windows',
   },
   macos: {
     label: '下载 macOS 版',
-    url: `${RELEASE_BASE}/chirrup-${APP_VERSION}-macos.dmg`,
+    url: 'https://chirrup.cn/dl/macos',
   },
 } as const

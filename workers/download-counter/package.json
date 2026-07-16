@@ -1,0 +1,13 @@
+{
+  "name": "chirrup-download-counter",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250705.0",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.24.0"
+  }
+}

@@ -1,0 +1,16 @@
+name = "chirrup-download-counter"
+main = "src/index.ts"
+compatibility_date = "2025-07-01"
+
+# 创建 KV 后填入 id（见 README）
+[[kv_namespaces]]
+binding = "DOWNLOADS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+# 发新版时与官网 src/config/downloads.ts 的 APP_VERSION 保持一致
+APP_VERSION = "1.0.4"
+
+# 路由在 Cloudflare Dashboard 配置：
+# Workers → chirrup-download-counter → Triggers → Add route
+#   chirrup.cn/dl/*
