@@ -3,10 +3,11 @@
     <div class="container">
       <div class="section-head">
         <span class="section-label">下载与安装</span>
-        <h2 class="section-title">下载并完成首次运行</h2>
-        <p class="section-desc">
-          当前版本 {{ APP_VERSION }}。选择系统后下载，再按示意放行即可。
-        </p>
+        <h2 class="section-title">
+          下载并完成首次运行
+          <span class="version">v{{ APP_VERSION }}</span>
+        </h2>
+        <p class="section-desc">选择系统下载，再按下方示意完成首次打开。</p>
       </div>
 
       <div class="platform-bar">
@@ -348,6 +349,27 @@ onUnmounted(() => {
 
 .section-head {
   margin-bottom: 28px;
+
+  .section-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 12px;
+  }
+}
+
+.version {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-bg);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--color-text-muted);
 }
 
 .platform-bar {
