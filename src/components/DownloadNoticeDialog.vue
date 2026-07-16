@@ -18,48 +18,63 @@
             <div class="dl-flyout">
               <div class="dl-head">下载</div>
 
-              <!-- Stage 0–1: uncommon download warning -->
-              <div class="dl-card" :class="{ dim: stage >= 2 }">
-                <span class="warn-icon">!</span>
-                <p>
-                  通常不会下载 <b>chirrup.exe</b>。请在打开前确保信任此文件。
-                </p>
-                <div class="dl-more" :class="{ pulse: stage === 0 }" ref="moreEl">⋯</div>
-              </div>
-
-              <div v-show="stage === 1" class="ctx-menu" ref="menuEl">
-                <span>删除</span>
-                <span class="active">保留</span>
-                <span>了解更多信息</span>
-              </div>
-
-              <!-- Stage 2: trust confirm -->
-              <div v-show="stage >= 2" class="dl-confirm" ref="confirmEl">
-                <p class="confirm-title">打开前请确保信任 chirrup.exe</p>
-                <p class="confirm-desc">Microsoft Defender SmartScreen 无法验证此文件是否安全。</p>
-                <div class="confirm-meta">发布者：未知</div>
-                <div class="confirm-actions">
-                  <span class="ghost">取消</span>
-                  <span class="split" :class="{ pulse: stage === 2 }">
-                    删除
-                    <i>▾</i>
-                  </span>
+              <!-- Step 1 scene -->
+              <div class="scene" :class="{ visible: activeStep === 1 }">
+                <div class="dl-card">
+                  <span class="warn-icon">!</span>
+                  <p>通常不会下载 <b>chirrup.exe</b>。请在打开前确保信任此文件。</p>
+                  <div class="dl-more" :class="{ pulse: activeStep === 1 && subPhase === 0 }">⋯</div>
                 </div>
-                <div v-show="stage === 3" class="keep-menu" ref="keepEl">
-                  <span class="active">仍然保留</span>
+                <div v-show="activeStep === 1 && subPhase === 1" class="ctx-menu">
+                  <span>删除</span>
+                  <span class="active">保留</span>
+                  <span>了解更多信息</span>
+                </div>
+              </div>
+
+              <!-- Step 2 scene -->
+              <div class="scene" :class="{ visible: activeStep === 2 }">
+                <div class="dl-confirm">
+                  <p class="confirm-title">打开前请确保信任 chirrup.exe</p>
+                  <p class="confirm-desc">Microsoft Defender SmartScreen 无法验证此文件是否安全。</p>
+                  <div class="confirm-meta">发布者：未知</div>
+                  <div class="confirm-actions">
+                    <span class="ghost">取消</span>
+                    <span class="split" :class="{ pulse: activeStep === 2 && subPhase === 0 }">
+                      删除
+                      <i>▾</i>
+                    </span>
+                  </div>
+                  <div v-show="activeStep === 2 && subPhase === 1" class="keep-menu">
+                    <span class="active">仍然保留</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <ol class="notice-steps">
-            <li :class="{ active: stage <= 1 }">
-              <strong>01 点 ⋯ → 保留</strong>
-              <span>下载栏出现黄色提示时，点右侧 <em>⋯</em>，再选 <em>保留</em>。</span>
+            <li>
+              <button
+                type="button"
+                class="step-btn"
+                :class="{ active: activeStep === 1 }"
+                @click="goStep(1)"
+              >
+                <strong>01 点 ⋯ → 保留</strong>
+                <span>下载栏出现黄色提示时，点右侧 <em>⋯</em>，再选 <em>保留</em>。</span>
+              </button>
             </li>
-            <li :class="{ active: stage >= 2 }">
-              <strong>02 仍然保留</strong>
-              <span>若再次确认，点 <em>删除</em> 旁箭头，选 <em>仍然保留</em>。</span>
+            <li>
+              <button
+                type="button"
+                class="step-btn"
+                :class="{ active: activeStep === 2 }"
+                @click="goStep(2)"
+              >
+                <strong>02 仍然保留</strong>
+                <span>若再次确认，点 <em>删除</em> 旁箭头，选 <em>仍然保留</em>。</span>
+              </button>
             </li>
           </ol>
         </div>
@@ -97,21 +112,46 @@ const emit = defineEmits<{
 }>()
 
 const panelEl = ref<HTMLElement | null>(null)
-const stage = ref(0)
+const activeStep = ref<1 | 2>(1)
+const subPhase = ref<0 | 1>(0)
 let timer: ReturnType<typeof setInterval> | null = null
+let userPinned = false
 
 function tick() {
-  stage.value = (stage.value + 1) % 4
+  if (userPinned) {
+    subPhase.value = subPhase.value === 0 ? 1 : 0
+    return
+  }
+  if (activeStep.value === 1 && subPhase.value === 0) {
+    subPhase.value = 1
+  } else if (activeStep.value === 1 && subPhase.value === 1) {
+    activeStep.value = 2
+    subPhase.value = 0
+  } else if (activeStep.value === 2 && subPhase.value === 0) {
+    subPhase.value = 1
+  } else {
+    activeStep.value = 1
+    subPhase.value = 0
+  }
+}
+
+function goStep(step: 1 | 2) {
+  userPinned = true
+  activeStep.value = step
+  subPhase.value = 0
 }
 
 function startLoop() {
   stopLoop()
-  stage.value = 0
+  userPinned = false
+  activeStep.value = 1
+  subPhase.value = 0
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    stage.value = 3
+    activeStep.value = 1
+    subPhase.value = 1
     return
   }
-  timer = setInterval(tick, 1600)
+  timer = setInterval(tick, 1500)
 }
 
 function stopLoop() {
@@ -192,14 +232,13 @@ onUnmounted(() => {
   align-items: stretch;
 }
 
-.browser-demo {
-  min-height: 220px;
+.browser-demo,
+.dl-flyout {
+  height: 248px;
 }
 
 .dl-flyout {
   position: relative;
-  height: 100%;
-  min-height: 220px;
   padding: 12px;
   border-radius: var(--radius-md);
   background: #1c1c1c;
@@ -213,6 +252,21 @@ onUnmounted(() => {
   font-weight: 700;
 }
 
+.scene {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 40px;
+  bottom: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+
+  &.visible {
+    opacity: 1;
+  }
+}
+
 .dl-card {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -221,11 +275,6 @@ onUnmounted(() => {
   padding: 10px;
   border-radius: 8px;
   background: #2a2a2a;
-  transition: opacity 0.25s ease;
-
-  &.dim {
-    opacity: 0.35;
-  }
 
   p {
     margin: 0;
@@ -273,8 +322,8 @@ onUnmounted(() => {
 
 .ctx-menu {
   position: absolute;
-  top: 88px;
-  right: 18px;
+  top: 58px;
+  right: 0;
   z-index: 3;
   min-width: 120px;
   padding: 6px;
@@ -303,7 +352,7 @@ onUnmounted(() => {
 
 .dl-confirm {
   position: relative;
-  margin-top: 10px;
+  height: 100%;
   padding: 12px;
   border-radius: 8px;
   background: #2a2a2a;
@@ -330,6 +379,9 @@ onUnmounted(() => {
 }
 
 .confirm-actions {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
   display: flex;
   justify-content: flex-end;
   gap: 8px;
@@ -367,7 +419,7 @@ onUnmounted(() => {
 .keep-menu {
   position: absolute;
   right: 12px;
-  bottom: 44px;
+  bottom: 48px;
   min-width: 110px;
   padding: 6px;
   border-radius: 8px;
@@ -396,23 +448,30 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
 
-  li {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 12px 14px;
-    border-radius: var(--radius-md);
-    border: 1.5px solid transparent;
-    background: var(--color-surface);
-    transition:
-      border-color var(--transition),
-      background-color var(--transition);
+.step-btn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  background: var(--color-surface);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
 
-    &.active {
-      background: var(--color-accent-muted);
-      border-color: rgba(212, 175, 55, 0.45);
-    }
+  &:hover {
+    background: var(--color-bg);
+  }
+
+  &.active {
+    background: var(--color-accent-muted);
+    border-color: rgba(212, 175, 55, 0.45);
   }
 
   strong {
@@ -456,8 +515,9 @@ onUnmounted(() => {
     grid-template-columns: 1fr;
   }
 
-  .browser-demo {
-    min-height: 200px;
+  .browser-demo,
+  .dl-flyout {
+    height: 220px;
   }
 }
 </style>
