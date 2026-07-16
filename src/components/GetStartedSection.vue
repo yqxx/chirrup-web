@@ -32,21 +32,26 @@
           </button>
         </div>
 
-        <a
+        <button
+          type="button"
           class="btn btn-primary platform-download"
-          :href="currentDownload.url"
-          target="_blank"
-          rel="noopener noreferrer"
+          @click="onDownloadClick"
         >
           <Download :size="16" />
           {{ currentDownload.label }}
-        </a>
+        </button>
       </div>
 
       <p class="unsigned-tip">
-        安装包暂未代码签名。浏览器若提示「通常不会下载」，选择「保留」即可；首次运行 Windows
-        点「更多信息 → 仍要运行」，macOS 按下方示意操作。
+        安装包暂未代码签名。Windows 下载前会提示浏览器保留步骤；macOS 请按下方示意操作。
       </p>
+
+      <DownloadNoticeDialog
+        :open="noticeOpen"
+        :url="downloads.windows.url"
+        @close="noticeOpen = false"
+        @confirm="noticeOpen = false"
+      />
 
       <div class="setup-block" id="setup">
         <div class="guide-demo">
@@ -149,6 +154,7 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import gsap from 'gsap'
 import { Download } from '@lucide/vue'
+import DownloadNoticeDialog from '@/components/DownloadNoticeDialog.vue'
 import { APP_VERSION, downloads } from '@/config/downloads'
 import { publicUrl } from '@/config/site'
 import { useInView } from '@/composables/useInView'
@@ -160,8 +166,17 @@ const iconUrl = publicUrl('icon.svg')
 const platform = ref<Platform>('windows')
 const step = ref(0)
 const paused = ref(false)
+const noticeOpen = ref(false)
 
 const currentDownload = computed(() => downloads[platform.value])
+
+function onDownloadClick() {
+  if (platform.value === 'windows') {
+    noticeOpen.value = true
+    return
+  }
+  window.open(downloads.macos.url, '_blank', 'noopener,noreferrer')
+}
 
 const rootEl = ref<HTMLElement | null>(null)
 const dialogEl = ref<HTMLElement | null>(null)
