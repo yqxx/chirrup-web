@@ -1,5 +1,5 @@
 /** 发版时同步更新版本号与下方链接 */
-export const APP_VERSION = '1.0.2'
+export const APP_VERSION = '1.0.3'
 
 const RELEASE_BASE = `https://gitee.com/yqxx/chirrup-releases/releases/download/v${APP_VERSION}`
 
