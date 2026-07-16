@@ -43,7 +43,7 @@
       </div>
 
       <p class="unsigned-tip">
-        安装包暂未代码签名。Windows 下载前会提示浏览器保留步骤；macOS 请按下方示意操作。
+        安装包暂未代码签名。Windows 下载前会演示如何在浏览器中保留文件；打开后的拦截见下方示意。
       </p>
 
       <DownloadNoticeDialog
