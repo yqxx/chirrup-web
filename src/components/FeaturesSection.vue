@@ -27,7 +27,7 @@ const features = [
   {
     icon: Radio,
     title: '局域网 UDP 广播',
-    desc: '同一 Wi‑Fi 下即时预警，端口 12345，无需服务器。',
+    desc: '同一子网内即时预警，端口 12345，无需服务器。',
   },
   {
     icon: AppWindow,

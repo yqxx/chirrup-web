@@ -6,6 +6,7 @@
       <FeaturesSection />
       <HowSection />
       <GetStartedSection />
+      <FaqSection />
     </main>
     <SiteFooter />
   </div>
@@ -17,6 +18,7 @@ import HeroSection from '@/components/HeroSection.vue'
 import FeaturesSection from '@/components/FeaturesSection.vue'
 import HowSection from '@/components/HowSection.vue'
 import GetStartedSection from '@/components/GetStartedSection.vue'
+import FaqSection from '@/components/FaqSection.vue'
 import SiteFooter from '@/components/SiteFooter.vue'
 </script>
 

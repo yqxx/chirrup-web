@@ -167,7 +167,10 @@
       <div class="prep">
         <h3>使用前准备</h3>
         <ul>
-          <li>所有设备连接同一局域网（同一 Wi‑Fi / 路由器）。</li>
+          <li>
+            所有设备须在同一子网（同网段 IP）。同一 Wi‑Fi 名也可能分 VLAN——详见
+            <a href="#faq">常见问题</a>。
+          </li>
           <li>防火墙允许应用使用 UDP 端口 12345。</li>
           <li>Windows：目标应用填完整路径或进程名；macOS：填应用名称（如 Notes）。</li>
           <li>本机发出的预警不会触发本机切屏；配置仅保存在本机。</li>
@@ -911,6 +914,16 @@ onUnmounted(() => {
 
   li + li {
     margin-top: 6px;
+  }
+
+  a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: var(--color-cta-hover);
+    }
   }
 }
 

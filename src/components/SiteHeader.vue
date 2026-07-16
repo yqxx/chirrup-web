@@ -10,6 +10,7 @@
         <a href="#features">功能</a>
         <a href="#how">使用</a>
         <a href="#download">下载</a>
+        <a href="#faq">问答</a>
       </nav>
 
       <a class="btn btn-primary header-cta" href="#download">立即下载</a>
