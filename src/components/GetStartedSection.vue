@@ -575,6 +575,20 @@ onUnmounted(() => {
     color: var(--color-text);
     box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25);
   }
+
+  &.pulse-ring {
+    animation: pulse-ring 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.15);
+  }
 }
 
 .script-badge {
