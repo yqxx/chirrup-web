@@ -43,8 +43,8 @@
       </div>
 
       <p class="unsigned-tip">
-        安装包暂未代码签名。Windows 下载前会演示浏览器保留步骤；macOS 请优先使用 DMG
-        内安装脚本，或按下方备选手动步骤。
+        安装包暂未代码签名 / 公证。Windows 下载前会演示浏览器保留步骤；macOS 请优先使用
+        DMG 内 <code>mac-install.command</code>，失败再用下方手动步骤。
       </p>
 
       <DownloadNoticeDialog
@@ -106,19 +106,25 @@
                   <p class="mac-hint">推荐：双击 <em>mac-install.command</em> 自动安装</p>
                 </div>
 
-                <div v-show="step === 1" class="dialog mac damaged">
-                  <div class="dialog-icon warn">!</div>
-                  <div class="dialog-body">
-                    <h3>“风紧扯呼”已损坏，无法打开</h3>
-                    <p class="detail">你应该推出磁盘映像。此提示多为未签名安装包的隔离机制，并非文件真坏了。</p>
-                    <div class="dialog-actions">
-                      <button type="button" class="primary" tabindex="-1">取消</button>
-                      <button type="button" class="ghost" tabindex="-1">推出磁盘映像</button>
+                <div v-show="step === 1" class="mac-panel gatekeeper-panel">
+                  <div class="dialog mac gatekeeper">
+                    <div class="dialog-icon warn">!</div>
+                    <div class="dialog-body">
+                      <h3>无法打开“mac-install.command”</h3>
+                      <p class="detail">Apple 无法检查是否包含恶意软件。点「完成」，不要移到废纸篓。</p>
+                      <div class="dialog-actions">
+                        <button type="button" class="primary" tabindex="-1">完成</button>
+                        <button type="button" class="ghost" tabindex="-1">移到废纸篓</button>
+                      </div>
                     </div>
                   </div>
+                  <p class="mac-hint settings-hint">
+                    再到 <em>系统设置 → 隐私与安全性</em>，点击 <em>仍要打开</em>
+                  </p>
                 </div>
 
                 <div v-show="step === 2" class="mac-panel terminal-panel">
+                  <p class="mac-hint fallback-label">备选：拖到应用程序后，在终端执行</p>
                   <div class="term-chrome">终端 — bash</div>
                   <pre class="term-body"><span class="prompt">$</span> xattr -dr com.apple.quarantine \
   "/Applications/风紧扯呼.app"</pre>
@@ -231,19 +237,19 @@ const stepsMap = {
   macos: [
     {
       title: '推荐：双击安装脚本',
-      desc: '打开 DMG，双击 mac-install.command；若被拦，到系统设置里「仍要打开」。',
+      desc: '打开 DMG，双击 mac-install.command；脚本会复制到应用程序并解除隔离。',
     },
     {
-      title: '若提示「已损坏」',
-      desc: '点「取消」，不要推出；把「风紧扯呼」拖到「应用程序」。',
+      title: '被拦时：完成 → 仍要打开',
+      desc: '点「完成」（勿移到废纸篓），再到系统设置 → 隐私与安全性 →「仍要打开」。',
     },
     {
-      title: '终端解除隔离',
-      desc: '执行 xattr -dr com.apple.quarantine "/Applications/风紧扯呼.app"。',
+      title: '备选：手动 xattr',
+      desc: '拖到应用程序后执行 xattr -dr com.apple.quarantine "/Applications/风紧扯呼.app"。',
     },
     {
       title: '打开并完成设置',
-      desc: '从「应用程序」打开，设置昵称与目标应用。',
+      desc: '从启动台或「应用程序」打开，设置昵称与目标应用（如 Notes）。',
     },
   ],
 } as const
@@ -466,6 +472,15 @@ onUnmounted(() => {
   font-size: 13px;
   color: var(--color-text-subtle);
   line-height: 1.55;
+
+  code {
+    font-size: 12px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
 }
 
 .platform-tabs {
@@ -612,9 +627,28 @@ onUnmounted(() => {
     font-weight: 700;
     color: var(--color-text);
   }
+
+  &.settings-hint {
+    margin-top: 12px;
+  }
+
+  &.fallback-label {
+    margin-bottom: 10px;
+    color: #a3a3a3;
+
+    em {
+      color: #fafafa;
+    }
+  }
 }
 
-.dialog.damaged {
+.gatekeeper-panel {
+  .dialog.gatekeeper {
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+  }
+
   .dialog-actions .primary {
     box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.55);
   }
