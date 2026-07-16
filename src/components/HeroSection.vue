@@ -20,7 +20,7 @@
           <a class="btn btn-secondary" href="#download">使用指南</a>
         </div>
         <ul class="hero-meta reveal reveal-delay-3">
-          <li>Windows / macOS</li>
+          <li>Windows 便携版 / macOS</li>
           <li>无需账号</li>
           <li>纯局域网 · 不上云</li>
         </ul>

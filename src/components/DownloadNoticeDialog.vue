@@ -11,7 +11,7 @@
       <button type="button" class="notice-backdrop" aria-label="关闭" @click="emit('close')" />
       <div class="notice-panel" ref="panelEl">
         <h3 id="download-notice-title">下载须知</h3>
-        <p class="lead">安装包暂未代码签名，浏览器可能提示「通常不会下载」。按示意保留文件即可。</p>
+        <p class="lead">Windows 便携 exe 暂未代码签名，浏览器可能提示「通常不会下载」。按示意保留文件即可。</p>
 
         <div class="demo-row">
           <div class="browser-demo" aria-hidden="true">

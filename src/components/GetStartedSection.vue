@@ -43,7 +43,7 @@
       </div>
 
       <p class="unsigned-tip">
-        安装包暂未代码签名 / 公证。Windows 下载前会演示浏览器保留步骤；macOS 请优先使用
+        安装包暂未代码签名 / 公证。Windows 为<strong>便携 exe</strong>（非安装包），下载前会演示浏览器保留步骤；macOS 请优先使用
         DMG 内 <code>mac-install.command</code>，失败再用下方手动步骤。
       </p>
 
@@ -172,7 +172,8 @@
             <a href="#faq">常见问题</a>。
           </li>
           <li>防火墙允许应用使用 UDP 端口 12345。</li>
-          <li>Windows：目标应用填完整路径或进程名；macOS：填应用名称（如 Notes）。</li>
+          <li>Windows 便携版需系统已安装 WebView2（Win10/11 通常自带）。</li>
+          <li>Windows：目标应用填进程名（如 <code>notepad.exe</code>）；macOS：填应用名（如 Notes）。</li>
           <li>本机发出的预警不会触发本机切屏；配置仅保存在本机。</li>
         </ul>
       </div>

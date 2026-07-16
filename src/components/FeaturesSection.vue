@@ -42,7 +42,7 @@ const features = [
   {
     icon: HardDrive,
     title: '极致轻量',
-    desc: '安装包约 5–15MB，下载即用，不占空间。',
+    desc: '便携包约 5–15MB，下载即用，不占空间。',
   },
   {
     icon: Palette,

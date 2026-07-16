@@ -7,7 +7,7 @@ export const APP_VERSION = '1.0.4'
  */
 export const downloads = {
   windows: {
-    label: '下载 Windows 版',
+    label: '下载 Windows 便携版',
     url: 'https://chirrup.cn/dl/windows',
   },
   macos: {

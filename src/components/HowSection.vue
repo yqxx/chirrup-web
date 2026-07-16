@@ -24,7 +24,7 @@
 const steps = [
   {
     title: '下载并安装',
-    desc: '选择 Windows 安装包 / 便携版，或 macOS DMG。未签名包首次运行按引导放行即可。',
+    desc: 'Windows 下载便携 exe（需 WebView2）；macOS 下载 DMG。未签名包首次运行按引导放行即可。',
   },
   {
     title: '设置昵称与目标应用',

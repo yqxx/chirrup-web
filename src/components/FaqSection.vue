@@ -56,7 +56,7 @@
             <p>
               <strong>macOS：</strong>系统设置 → 网络 → 防火墙，若已开启，允许「风紧扯呼」传入连接。
             </p>
-            <p>两边 UDP 都在「监听中」但人数仍为 1 时，优先查是否跨网段，而不是只盯防火墙。</p>
+            <p>若在线人数仍为 1，优先查是否跨网段，而不是只盯防火墙。</p>
           </div>
         </details>
 
@@ -64,21 +64,32 @@
           <summary>收到预警但不自动切应用？</summary>
           <div class="faq-a">
             <p>
-              预警到达后，对方若关闭了「自动切换应用」，只会提示、不会切软件。确认对方已开启自动切换，且目标应用名
-              / 路径填写正确（Windows 可用完整路径或进程名；macOS 填应用名，如
-              <code>Notes</code>）。
+              预警到达后，对方若关闭了「自动切换应用」，只会提示、不会切软件。确认对方已开启自动切换，且目标应用填写正确（Windows
+              填进程名，如 <code>notepad.exe</code>；macOS 填应用名，如 <code>Notes</code>）。
             </p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>网络自检里看什么？</summary>
+          <summary>如何查看本机 IP 和在线人数？</summary>
           <div class="faq-a">
-            <p>应用内网络自检会显示平台、UDP 是否监听、昵称、在线人数与本机地址。</p>
             <p>
-              「在线 1（其他人 0）」+ 双方 IP 第三段 / 网段明显不同 → 跨子网，广播到不了。<br />
-              「UDP 未监听」→ 端口被占用或未正常启动，先重启应用。<br />
-              两台都先打开主窗口停几秒，再点发送预警（在线心跳由主窗口发出）。
+              主界面<strong>底部与版本号同一行</strong>会显示本机内网 IP；顶部有「在线 · N
+              人」。排查互通时可对比双方 IP 是否同网段。
+            </p>
+            <p>
+              若一直显示在线 1 人，参见上文「跨子网」说明。两台都先打开主窗口停几秒，再点发送预警（在线心跳由主窗口发出）。
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>有问题如何联系？</summary>
+          <div class="faq-a">
+            <p>
+              发邮件至
+              <a :href="`mailto:${CONTACT_EMAIL}`">{{ CONTACT_EMAIL }}</a
+              >，请说明操作系统版本、现象描述，并尽量附上报错截图。
             </p>
           </div>
         </details>
@@ -86,6 +97,10 @@
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+import { CONTACT_EMAIL } from '@/config/site'
+</script>
 
 <style scoped lang="scss">
 .faq {
@@ -174,6 +189,17 @@
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     color: var(--color-text);
+  }
+
+  a {
+    color: var(--color-text);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: var(--color-cta-hover);
+    }
   }
 }
 </style>
