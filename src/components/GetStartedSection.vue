@@ -44,7 +44,8 @@
       </div>
 
       <p class="unsigned-tip">
-        安装包暂未代码签名。Windows 点「更多信息 → 仍要运行」；macOS 按下方示意操作。
+        安装包暂未代码签名。浏览器若提示「通常不会下载」，选择「保留」即可；首次运行 Windows
+        点「更多信息 → 仍要运行」，macOS 按下方示意操作。
       </p>
 
       <div class="setup-block" id="setup">
