@@ -3,8 +3,8 @@
     <div class="container">
       <div class="how-head">
         <span class="section-label">使用</span>
-        <h2 class="section-title">三步上手</h2>
-        <p class="section-desc">装上、设好目标应用，同事一喊就能切屏。</p>
+        <h2 class="section-title">四步上手</h2>
+        <p class="section-desc">主窗口分「预警 / 读书」两个 Tab，按需配置即可。</p>
       </div>
 
       <ol class="steps">
@@ -24,15 +24,19 @@
 const steps = [
   {
     title: '下载并安装',
-    desc: 'Windows 下载便携 exe（需 WebView2）；macOS 下载 DMG。未签名包首次运行按引导放行即可。',
+    desc: 'Windows 下载便携 exe（需 WebView2）；macOS 下载 DMG。首次运行按引导放行即可。',
   },
   {
-    title: '设置昵称与目标应用',
-    desc: '从已打开应用中选择「收到预警时切换」的目标，并挑一个职场代号。',
+    title: '预警 Tab：昵称与目标应用',
+    desc: '设置职场代号、目标应用与颜色；可开预警迷你条，一键广播给同网段队友。',
   },
   {
-    title: '同一局域网，一键预警',
-    desc: '全员须在同一子网（同网段），点「风紧扯呼」或迷你条，其他人自动切屏。',
+    title: '读书 Tab：导入 TXT',
+    desc: '导入本地 TXT 到书架，调字号与滚速，打开读书迷你条按句阅读；←A / →D空格 翻页。',
+  },
+  {
+    title: '同一子网，协同使用',
+    desc: '预警与读书可同时进行：收到预警时读书条会闪动提醒，队友则自动切屏（若已开启）。',
   },
 ]
 </script>
@@ -50,8 +54,8 @@ const steps = [
 
 .steps {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -86,7 +90,13 @@ const steps = [
   line-height: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
   .steps {
     grid-template-columns: 1fr;
     gap: 28px;

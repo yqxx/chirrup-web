@@ -84,6 +84,19 @@
         </details>
 
         <details class="faq-item">
+          <summary>读书迷你条怎么用？能在线找书吗？</summary>
+          <div class="faq-a">
+            <p>
+              主窗口切到「读书」Tab → 导入你<strong>合法持有</strong>的 TXT（支持 UTF-8 / GBK）→ 点「读书迷你条」打开悬浮条。按句显示，可调字号、滚速与自动滚字；键盘
+              <kbd>←</kbd>/<kbd>A</kbd> 上一句，<kbd>→</kbd>/<kbd>D</kbd>/<kbd>空格</kbd> 下一句。
+            </p>
+            <p>
+              应用<strong>不提供在线书源</strong>，书架与阅读进度都在本机。读书条可与预警迷你条同时驻留；收到预警时会闪动提醒。
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
           <summary>有问题如何联系？</summary>
           <div class="faq-a">
             <p>
@@ -189,6 +202,15 @@ import { CONTACT_EMAIL } from '@/config/site'
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     color: var(--color-text);
+  }
+
+  kbd {
+    font-size: 12px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    font-family: inherit;
   }
 
   a {

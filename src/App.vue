@@ -4,6 +4,7 @@
     <main>
       <HeroSection />
       <FeaturesSection />
+      <ReaderSection />
       <HowSection />
       <GetStartedSection />
       <FaqSection />
@@ -16,6 +17,7 @@
 import SiteHeader from '@/components/SiteHeader.vue'
 import HeroSection from '@/components/HeroSection.vue'
 import FeaturesSection from '@/components/FeaturesSection.vue'
+import ReaderSection from '@/components/ReaderSection.vue'
 import HowSection from '@/components/HowSection.vue'
 import GetStartedSection from '@/components/GetStartedSection.vue'
 import FaqSection from '@/components/FaqSection.vue'

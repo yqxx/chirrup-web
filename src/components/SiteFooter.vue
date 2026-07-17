@@ -6,13 +6,14 @@
           <img :src="iconUrl" alt="" width="24" height="24" />
           <div>
             <strong>风紧扯呼</strong>
-            <span>局域网实时预警 · 一键切屏</span>
+            <span>局域网预警 · 本地读书条</span>
           </div>
         </div>
 
         <nav class="footer-links" aria-label="页脚导航">
-          <a href="#features">功能</a>
-          <a href="#how">使用</a>
+        <a href="#features">功能</a>
+        <a href="#reader">读书</a>
+        <a href="#how">使用</a>
           <a href="#download">下载</a>
           <a href="#faq">问答</a>
         </nav>

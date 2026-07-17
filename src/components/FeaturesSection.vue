@@ -3,7 +3,7 @@
     <div class="container">
       <div class="features-head">
         <span class="section-label">功能</span>
-        <h2 class="section-title">为职场「紧急情况」而生</h2>
+        <h2 class="section-title">预警 + 阅读，一个应用搞定</h2>
         <p class="section-desc">轻量、本地、即时响应——不依赖云端，不收集数据。</p>
       </div>
 
@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { AppWindow, Radio, Layers, HardDrive, Palette, Shield } from '@lucide/vue'
+import { AppWindow, BookOpen, HardDrive, Layers, Radio, Shield } from '@lucide/vue'
 
 const features = [
   {
@@ -32,12 +32,17 @@ const features = [
   {
     icon: AppWindow,
     title: '自动切换应用',
-    desc: '按本机预设，预警后切到目标应用。',
+    desc: '按本机预设，预警后切到目标应用；也可只收提醒不切屏。',
   },
   {
     icon: Layers,
-    title: '主窗 + 迷你条',
-    desc: '迷你悬浮条常驻桌面，随时一键发出预警。',
+    title: '双迷你条模式',
+    desc: '预警条与读书条可同时驻留桌面，互不占用、右键各开对应 Tab。',
+  },
+  {
+    icon: BookOpen,
+    title: '本地 TXT 书架',
+    desc: '导入合法持有的 TXT，按句阅读、记进度，字号与自动滚字可调。',
   },
   {
     icon: HardDrive,
@@ -45,14 +50,9 @@ const features = [
     desc: '便携包约 5–15MB，下载即用，不占空间。',
   },
   {
-    icon: Palette,
-    title: '中国风标识',
-    desc: '预设国风颜色 + 职场黑话昵称，辨识度拉满。',
-  },
-  {
     icon: Shield,
     title: '数据不上云',
-    desc: '配置存本地，预警历史仅会话内保留，隐私安心。',
+    desc: '预警配置、书架与阅读进度均保存在本机，隐私安心。',
   },
 ]
 </script>
