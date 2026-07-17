@@ -6,7 +6,7 @@
           <img :src="iconUrl" alt="" width="24" height="24" />
           <div>
             <strong>风紧扯呼</strong>
-            <span>局域网预警 · 本地读书条</span>
+            <span>局域网实时预警 · 一键切屏</span>
           </div>
         </div>
 

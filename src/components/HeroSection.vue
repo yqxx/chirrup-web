@@ -8,9 +8,9 @@
     <div class="container hero-inner">
       <div class="hero-copy">
         <p class="brand-mark reveal">风紧扯呼</p>
-        <h1 class="hero-title reveal reveal-delay-1">局域网实时预警<br />还能低调读本书</h1>
+        <h1 class="hero-title reveal reveal-delay-1">局域网实时预警<br />一键切屏保平安</h1>
         <p class="hero-desc reveal reveal-delay-2">
-          同事一喊「风紧扯呼」，全员自动切到安全应用；另有独立读书迷你条，导入本地 TXT 按句翻阅。轻量本地，即下即用。
+          同事一喊「风紧扯呼」，全员自动切到安全应用。轻量本地，即下即用。
         </p>
         <div class="hero-actions reveal reveal-delay-3">
           <a class="btn btn-primary" href="#download">
@@ -20,8 +20,8 @@
           <a class="btn btn-secondary" href="#download">使用指南</a>
         </div>
         <ul class="hero-meta reveal reveal-delay-3">
-          <li>预警 + 读书双迷你条</li>
-          <li>本地 TXT 书架</li>
+          <li>Windows 便携版 / macOS</li>
+          <li>无需账号</li>
           <li>纯局域网 · 不上云</li>
         </ul>
       </div>
