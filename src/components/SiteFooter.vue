@@ -13,6 +13,7 @@
         <nav class="footer-links" aria-label="页脚导航">
         <a href="#features">功能</a>
         <a href="#reader">读书</a>
+        <a href="#quotes">行情</a>
         <a href="#how">使用</a>
           <a href="#download">下载</a>
           <a href="#faq">问答</a>

@@ -151,7 +151,7 @@ https://chirrup.cn/dl/stats?token=你的STATS_TOKEN
 
 - 字体：Plus Jakarta Sans
 - 主色 `#171717` · CTA `#D4AF37`
-- 结构：Hero → 功能 → 读书迷你条 → 三步上手 → 下载与安装 → 常见问题 → Footer
+- 结构：Hero → 功能 → 读书迷你条 → 行情迷你条 → 三步上手 → 下载与安装 → 常见问题 → Footer
 
 ## SEO
 

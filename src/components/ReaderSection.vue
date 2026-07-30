@@ -5,7 +5,7 @@
         <span class="section-label">读书迷你条</span>
         <h2 class="section-title">本地 TXT，悬浮按句读</h2>
         <p class="section-desc">
-          主窗口「读书」Tab 导入 TXT，打开迷你条低调翻阅。不提供在线书源；可与预警迷你条并存。
+          主窗口「读书」Tab 导入 TXT，打开迷你条低调翻阅。不提供在线书源；可与预警/行情迷你条并存。
         </p>
         <ul class="reader-notes">
           <li>UTF-8 / GBK，进度与字号保存在本机</li>

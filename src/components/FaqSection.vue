@@ -97,6 +97,19 @@
         </details>
 
         <details class="faq-item">
+          <summary>行情迷你条怎么用？数据准吗？</summary>
+          <div class="faq-a">
+            <p>
+              主窗口切到「行情」Tab → 录入 A 股 6 位代码加入自选 → 点「行情迷你条」打开悬浮条。支持手动/自动刷新，非交易时段会降频但仍显示最近价格。
+            </p>
+            <p>
+              数据来自腾讯/新浪公开接口，<strong>仅供参考，不构成投资建议</strong>。键盘
+              <kbd>←</kbd>/<kbd>A</kbd>、<kbd>→</kbd>/<kbd>D</kbd>/<kbd>空格</kbd> 切换标的，<kbd>Q</kbd> 隐藏迷你条。
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
           <summary>有问题如何联系？</summary>
           <div class="faq-a">
             <p>

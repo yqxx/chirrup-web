@@ -1,5 +1,5 @@
 /** 发版时同步更新：本文件 APP_VERSION + workers/download-counter/wrangler.toml */
-export const APP_VERSION = '1.0.7'
+export const APP_VERSION = '1.1.0'
 
 /**
  * 下载走本域 /dl/*（Cloudflare Worker 计数后跳转 Gitee）。
